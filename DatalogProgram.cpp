@@ -131,20 +131,25 @@ void DatalogProgram::queryList(int &tk_num, vector<string> &token_type, vector<s
 void DatalogProgram::scheme(int &tk_num, vector<string> &token_type, vector<string> &token_input, vector<int> &token_linenum){
     if(token_type[tk_num]==sch_first){ //if its ID
         scheme_flow+="\n  "+token_input[tk_num];
+        Relation relation(token_input[tk_num]); //RELATION IS CREATED
+        //cout<<relation.getName()<<endl; //-----------------------------------------------------------------
         tk_num++;
         if(token_type[tk_num] == "LEFT_PAREN"){
             scheme_flow+=token_input[tk_num];
             tk_num++;
             if(token_type[tk_num] == "ID"){
                 scheme_flow+=token_input[tk_num];
+                relation.attributes.push_back (token_input[tk_num]);    //pushing attribute to relation
                 tk_num++;
-                idList(tk_num,token_type,token_input,token_linenum,scheme_flow);
+                idList(tk_num,token_type,token_input,token_linenum, relation, scheme_flow);
                 if(token_type[tk_num] == "RIGHT_PAREN"){
                     scheme_flow+=token_input[tk_num];
                     tk_num++;//here scheme will end
                 }else{throw tk_num;}
             }else{throw tk_num;}
         }else{throw tk_num;}
+        //if scheme is successful, add Relation to relation_list
+        relation_list.push_back (relation);
     }else{throw tk_num;}
     scheme_count++;
 }
@@ -152,6 +157,7 @@ void DatalogProgram::scheme(int &tk_num, vector<string> &token_type, vector<stri
 void DatalogProgram::fact(int &tk_num, vector<string> &token_type, vector<string> &token_input, vector<int> &token_linenum){
     if(token_type[tk_num]==fct_first) { //if its ID
         fact_flow += "\n  " + token_input[tk_num];
+        int rel_index = return_matching_relation_index(token_input[tk_num]);    // index of relation
         tk_num++;
         if(token_type[tk_num] == "LEFT_PAREN") {
             fact_flow += token_input[tk_num];
@@ -159,8 +165,10 @@ void DatalogProgram::fact(int &tk_num, vector<string> &token_type, vector<string
             if(token_type[tk_num] == "STRING"){
                 fact_flow+=token_input[tk_num];
                 domains.push_back(token_input[tk_num]);
+                Tuple n_tuple; // ----this is where you start adding vals to your tuples
+                n_tuple.add_value(token_input[tk_num]);
                 tk_num++;
-                stringList(tk_num,token_type,token_input,token_linenum,fact_flow);
+                stringList(tk_num,token_type,token_input,token_linenum, n_tuple,fact_flow);
                 if(token_type[tk_num] == "RIGHT_PAREN"){
                     fact_flow+=token_input[tk_num];
                     tk_num++;
@@ -169,6 +177,8 @@ void DatalogProgram::fact(int &tk_num, vector<string> &token_type, vector<string
                         tk_num++;//here fact will end
                     }else{throw tk_num;}
                 }else{throw tk_num;}
+                //IF TUPLE IS SUCCESSFUL, IT IS ADDED TO THE TUPLES LIST OF ITS RESPECTIVE
+                adding_tuple_to_relation(rel_index, n_tuple);
             }else{throw tk_num;}
         }else{throw tk_num;}
     }else{throw tk_num;}
@@ -192,7 +202,7 @@ void DatalogProgram::query(int &tk_num, vector<string> &token_type, vector<strin
 
 //COMMA STRING stringList | lambda
 void DatalogProgram::stringList(int &tk_num, vector<string> &token_type, vector<string> &token_input,
-                                vector<int> &token_linenum, string& curr_out_flow){
+                                vector<int> &token_linenum, Tuple& n_tuple, string& curr_out_flow){
     if(does_token_match(token_type[tk_num],strL_first,2)){
         if(token_type[tk_num] == "COMMA"){//first 1
             curr_out_flow+=token_input[tk_num];
@@ -200,8 +210,9 @@ void DatalogProgram::stringList(int &tk_num, vector<string> &token_type, vector<
             if(token_type[tk_num] == "STRING") {//STRING
                 curr_out_flow+=token_input[tk_num];
                 domains.push_back(token_input[tk_num]);
+                n_tuple.add_value(token_input[tk_num]); // ADDING TO TUPPLE
                 tk_num++;
-                stringList(tk_num,token_type,token_input,token_linenum, curr_out_flow);
+                stringList(tk_num,token_type,token_input,token_linenum, n_tuple, curr_out_flow);
             }else{throw tk_num;}
         }else {//this is for when it's lambda
             //tk_num++;
@@ -212,15 +223,16 @@ void DatalogProgram::stringList(int &tk_num, vector<string> &token_type, vector<
 }
 
 void DatalogProgram::idList(int &tk_num, vector<string> &token_type, vector<string> &token_input,
-                            vector<int> &token_linenum, string& curr_out_flow){
+                            vector<int> &token_linenum, Relation &relation, string& curr_out_flow){
     if(does_token_match(token_type[tk_num],idL_first,2)){ //if its any first of idList
         if(token_type[tk_num] == "COMMA"){//first 1
             curr_out_flow+=token_input[tk_num];
             tk_num++;
             if(token_type[tk_num] == "ID") {//STRING
                 curr_out_flow+=token_input[tk_num];
+                relation.attributes.push_back (token_input[tk_num]);    //pushing attribute to relation
                 tk_num++;
-                idList(tk_num,token_type,token_input,token_linenum, curr_out_flow);
+                idList(tk_num,token_type,token_input,token_linenum, relation, curr_out_flow);
             }else{throw tk_num;}
         }else {//this is for when it's lambda
             //tk_num++;
@@ -240,4 +252,24 @@ bool DatalogProgram::does_token_match(string token, const string the_list[], int
 
 string DatalogProgram::datalogProgram_string(){//prints the out string
     return the_output;
+}
+
+int DatalogProgram::return_matching_relation_index(string nm) {// returns relation that names matches input
+    int rel_index = -1;
+    for (int i=0; i<relation_list.size(); i++){
+        if(nm == relation_list.at(i).getName())
+            rel_index = i;
+    }
+    return rel_index;
+}
+
+void DatalogProgram::adding_tuple_to_relation(int rel_index,Tuple & n_tuple) {
+    bool does_it_match = false;
+    for (int i=0; i<relation_list.at(rel_index).tuples_list.size(); i++){
+        if (n_tuple.values_list == relation_list.at(rel_index).tuples_list.at(i).values_list) {
+            does_it_match = true;
+        }
+    }
+    if (!does_it_match)
+        relation_list.at(rel_index).tuples_list.push_back(n_tuple);
 }

@@ -10,20 +10,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d596b1fa-33ee-4bf7-a9f6-9ac2e4315cba" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/DatalogProgram.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DatalogProgram.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Parameter.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Parameter.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Predicate.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Predicate.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Rule.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Rule.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/state_transitions.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tokenizer.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Relation.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Relation.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tuple.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tuple.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/80_bucket/test_case3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/80_bucket/test_case3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatalogProgram.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/DatalogProgram.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatalogProgram.h" beforeDir="false" afterPath="$PROJECT_DIR$/DatalogProgram.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,6 +45,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -77,7 +74,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1572717738323</updated>
-      <workItem from="1572717739523" duration="1999000" />
+      <workItem from="1572717739523" duration="14239000" />
     </task>
     <servers />
   </component>

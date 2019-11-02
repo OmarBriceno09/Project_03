@@ -8,6 +8,8 @@
 #include <bits/stdc++.h>
 #include "Rule.h"
 #include "Predicate.h"
+#include "Relation.h"
+#include "Tuple.h"
 
 using namespace std;
 
@@ -17,6 +19,7 @@ public:
     ~DatalogProgram();
 
     string datalogProgram_string();
+    vector<Relation> relation_list;
     //void dataLogProgram(vector<string>&, vector<string>&, vector<int>&);
 
 private:
@@ -47,10 +50,13 @@ private:
     void headPredicate(int&, vector<string>&, vector<string>&, vector<int>&, string&);//a
 
     void predicateList(int&, vector<string>&, vector<string>&, vector<int>&, string&);//a
-    void stringList(int&, vector<string>&, vector<string>&, vector<int>&, string&);
-    void idList(int&, vector<string>&, vector<string>&, vector<int>&, string&);
+    void stringList(int&, vector<string>&, vector<string>&, vector<int>&, Tuple&, string&);
+    void idList(int&, vector<string>&, vector<string>&, vector<int>&, Relation&, string&);
 
     bool does_token_match(string, const string[], int);
+
+    int return_matching_relation_index(string);
+    void adding_tuple_to_relation(int,Tuple&);
 
 //declaring first sets
     const string dP_first = "SCHEMES";
