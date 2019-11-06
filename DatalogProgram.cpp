@@ -139,7 +139,7 @@ void DatalogProgram::scheme(int &tk_num, vector<string> &token_type, vector<stri
             tk_num++;
             if(token_type[tk_num] == "ID"){
                 scheme_flow+=token_input[tk_num];
-                relation.attributes.push_back (token_input[tk_num]);    //pushing attribute to relation
+                relation.setAttribute(token_input[tk_num]);    //pushing attribute to relation
                 tk_num++;
                 idList(tk_num,token_type,token_input,token_linenum, relation, scheme_flow);
                 if(token_type[tk_num] == "RIGHT_PAREN"){
@@ -178,7 +178,7 @@ void DatalogProgram::fact(int &tk_num, vector<string> &token_type, vector<string
                     }else{throw tk_num;}
                 }else{throw tk_num;}
                 //IF TUPLE IS SUCCESSFUL, IT IS ADDED TO THE TUPLES LIST OF ITS RESPECTIVE
-                adding_tuple_to_relation(rel_index, n_tuple);
+                relation_list.at(rel_index).setTuple(n_tuple);
             }else{throw tk_num;}
         }else{throw tk_num;}
     }else{throw tk_num;}
@@ -190,7 +190,31 @@ void DatalogProgram::query(int &tk_num, vector<string> &token_type, vector<strin
     if(token_type[tk_num]==qry_first) { //if its ID
         query_flow += "\n  ";
 
+        cout<<"in relation ["<<token_input[tk_num]<<"]: "<<endl;// delete later ------------------------------------------------
+        int curr_rel_index = return_matching_relation_index(token_input[tk_num]);
+
         Predicate predicate(tk_num,token_type,token_input,token_linenum);
+        //cout<<"size: "<<predicate.the_parameter_list.size()<<endl; // delete later ------------------------------------------------
+        cout<<"         "<<predicate.toString_paramList()<<endl; // delete later ------------------------------------------------
+        cout<<"         "<<predicate.toString_paramType()<<endl; // delete later ------------------------------------------------
+        relation_list.at(curr_rel_index).rename(predicate.params_tkn_type, predicate.the_parameter_list);
+        Relation relation_copy1 = relation_list.at(curr_rel_index);
+        relation_copy1.select(predicate.params_tkn_type, predicate.the_parameter_list);
+        //to check if any predicate is id for project
+        int i=0;
+        bool all_string= true;
+        while(i<predicate.params_tkn_type.size()&&all_string){
+            if (predicate.params_tkn_type.at(i)=="ID")
+                all_string = false;
+            i++;
+        }
+
+        if (!all_string)
+            relation_copy1.project(predicate.params_tkn_type);
+        cout<<relation_toString(relation_copy1); // delete later -------------------------------------------------
+        cout<<endl;// delete later -------------------------------------------------
+
+
         query_flow += predicate.return_the_predicate();
         if(token_type[tk_num] == "Q_MARK") {
             query_flow += token_input[tk_num];
@@ -230,7 +254,7 @@ void DatalogProgram::idList(int &tk_num, vector<string> &token_type, vector<stri
             tk_num++;
             if(token_type[tk_num] == "ID") {//STRING
                 curr_out_flow+=token_input[tk_num];
-                relation.attributes.push_back (token_input[tk_num]);    //pushing attribute to relation
+                relation.setAttribute(token_input[tk_num]);    //pushing attribute to relation
                 tk_num++;
                 idList(tk_num,token_type,token_input,token_linenum, relation, curr_out_flow);
             }else{throw tk_num;}
@@ -254,6 +278,17 @@ string DatalogProgram::datalogProgram_string(){//prints the out string
     return the_output;
 }
 
+string DatalogProgram::relation_toString(Relation & the_relation) {
+    string rel_string = "";
+    rel_string += the_relation.getName()+"\n ";
+    for(int j=0; j<the_relation.getCols();j++){
+        rel_string += the_relation.getAttribute(j)+", ";
+    }
+    rel_string+='\n';
+    rel_string+=the_relation.toStringTuples();
+    return rel_string;
+}
+
 int DatalogProgram::return_matching_relation_index(string nm) {// returns relation that names matches input
     int rel_index = -1;
     for (int i=0; i<relation_list.size(); i++){
@@ -261,15 +296,4 @@ int DatalogProgram::return_matching_relation_index(string nm) {// returns relati
             rel_index = i;
     }
     return rel_index;
-}
-
-void DatalogProgram::adding_tuple_to_relation(int rel_index,Tuple & n_tuple) {
-    bool does_it_match = false;
-    for (int i=0; i<relation_list.at(rel_index).tuples_list.size(); i++){
-        if (n_tuple.values_list == relation_list.at(rel_index).tuples_list.at(i).values_list) {
-            does_it_match = true;
-        }
-    }
-    if (!does_it_match)
-        relation_list.at(rel_index).tuples_list.push_back(n_tuple);
 }

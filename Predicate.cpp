@@ -19,12 +19,18 @@ void Predicate::the_predicate(int &tk_num, vector<string> &token_type, vector<st
         if (token_type[tk_num] == "LEFT_PAREN") {//first 1
             predicate_string += token_input[tk_num];
             tk_num++;
+
+            params_tkn_type.push_back(token_type[tk_num]);   //pushing back parameter type for relations
+
             //instantiating parameter object
             Parameter parameter(tk_num,token_type,token_input,token_linenum);
             //appending parameter to DatalogProgram string
+
             the_parameter_list.push_back(parameter.return_the_parameter());
+
             predicate_string += parameter.return_the_parameter();
             parameterList(tk_num,token_type,token_input,token_linenum);
+
             if (token_type[tk_num] == "RIGHT_PAREN") {//first 1
                 predicate_string += token_input[tk_num];
                 tk_num++;//predicate ends, recurr back
@@ -40,6 +46,9 @@ void Predicate::parameterList(int &tk_num, vector<string> &token_type, vector<st
         if(token_type[tk_num] == "COMMA"){//first 1
             predicate_string+=token_input[tk_num];
             tk_num++;
+
+            params_tkn_type.push_back(token_type[tk_num]);  //pushing back parameter type for relations
+
             //instantiating parameter object
             Parameter parameter(tk_num,token_type,token_input,token_linenum);
             //appending parameter to DatalogProgram string
@@ -64,4 +73,20 @@ bool Predicate::does_token_match(string token, const string the_list[], int list
 
 string Predicate::return_the_predicate(){
     return predicate_string;
+}
+
+string Predicate::toString_paramList() {
+    string the_strList = "";
+    for (int i =0; i<the_parameter_list.size();i++){
+        the_strList+= the_parameter_list.at(i)+" ";
+    }
+    return the_strList;
+}
+
+string Predicate::toString_paramType() {
+    string typ_string = "";
+    for (int i =0; i<params_tkn_type.size();i++){
+        typ_string+= params_tkn_type.at(i)+" ";
+    }
+    return typ_string;
 }

@@ -28,17 +28,8 @@ int main(int argc, char **argv) {
     DatalogProgram dlpg1(token_type,token_input,token_linenum);
 
     for (int i=0; i<dlpg1.relation_list.size(); i++){
-        cout<<dlpg1.relation_list.at(i).getName()<<endl;
-        cout<<" ";
-        for(int j=0; j<dlpg1.relation_list.at(i).attributes.size();j++){
-            cout<<dlpg1.relation_list.at(i).attributes.at(j)<<", ";
-        }
-        cout<<endl;
-        cout<<dlpg1.relation_list.at(i).toStringTuples();
+        cout<< dlpg1.relation_toString(dlpg1.relation_list.at(i));
     }
-
-
-    //cout<<dlpg1.datalogProgram_string();
 
     return 0;
 }

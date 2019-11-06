@@ -1,0 +1,20 @@
+# For use ONLY during the Fall 2019 semester
+# Copyright Cory Barker, Brigham Young University, August 2019
+
+Schemes:
+   csg(X,Y,Z,G)
+
+Facts:
+   csg('1','2','3','b').
+   csg('1','1','1','a').
+   csg('1','1','1','1').
+   csg('1','2','1','a').
+   csg('1','1','1','b').
+   csg('1','2','2','1').
+   csg('2','2','1','a').
+   csg('2','1','1','b').
+   csg('2','2','2','1').
+Rules:
+   cr(b,a) :- cr(b,a).
+Queries:
+   csg(C,S,D,B)?

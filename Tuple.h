@@ -5,6 +5,7 @@
 #ifndef PROJECT_03_TUPLE_H
 #define PROJECT_03_TUPLE_H
 #include <fstream>
+#include <iostream>//for output ---- delete later
 #include <vector>
 
 using namespace std;
@@ -14,8 +15,14 @@ public:
     Tuple();
     ~Tuple();
     void add_value(string);
+    void remove_value(int);
     string get_value(int);
+    vector <string> getValuesList();
+    string toStringTuple();
+
     int get_size();
+
+private:
     vector <string> values_list;
 };
 

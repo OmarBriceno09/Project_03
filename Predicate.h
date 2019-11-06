@@ -16,10 +16,13 @@ public:
     ~Predicate();
 
     string id="";
+    string toString_paramList();
+    string toString_paramType();
+
     vector <string> the_parameter_list;
+    vector <string> params_tkn_type;    //new
 
     string return_the_predicate();
-
 private:
     string predicate_string = "";
 
