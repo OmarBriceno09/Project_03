@@ -33,11 +33,11 @@ string Relation::getName() {
 
 string Relation::toStringTuples() {
     string the_output="";
-    for (int i=0; i<tuples_list.size(); i++){
+    for (int i=0; i<(int)tuples_list.size(); i++){
         the_output+="  ";
-        for(int j=0; j<attributes.size();j++){
+        for(int j=0; j<(int)attributes.size();j++){
             the_output += attributes.at(j)+"="+tuples_list.at(i).get_value(j);
-            if (j!=attributes.size()-1)
+            if (j!=(int)attributes.size()-1)
                 the_output+=", ";
         }
         the_output+= "\n";
@@ -100,7 +100,7 @@ int Relation::returnRowToInsert(Tuple tpl) {
 void Relation::rename(vector <string> tokens,vector<string> input) {    //length has to match!!!
     check_for_duplicates(tokens,input);
     int attribute_index = 0;
-    for(int i=0;i<tokens.size();i++){
+    for(int i=0;i<(int)tokens.size();i++){
         if (tokens.at(i) == "ID"){  // any chars in the input will result in removed cols
             int curr_id_i = return_var_name_index(input.at(i)); //returns index of var in var_instance_list
             if (i== stoi(var_instance_list.at(curr_id_i).get_value(0))){
@@ -117,9 +117,9 @@ void Relation::rename(vector <string> tokens,vector<string> input) {    //length
 
 void Relation::select(vector <string> tokens,vector<string> input) {
     check_for_duplicates(tokens,input);
-    for(int i=0;i<attributes.size();i++){
+    for(int i=0;i<(int)attributes.size();i++){
         if (tokens.at(i) == "STRING"){
-            for (int j=0;j<tuples_list.size();j++){
+            for (int j=0;j<(int)tuples_list.size();j++){
                 if (tuples_list.at(j).get_value(i) != input.at(i)){
                     tuples_list.erase(tuples_list.begin()+j);
                     j=-1;    //reset search, will be zero back at beginning of for loop
@@ -128,7 +128,7 @@ void Relation::select(vector <string> tokens,vector<string> input) {
         } else if (tokens.at(i) == "ID"){   // ex ('a',X,X)?
             int curr_id_i = return_var_name_index(input.at(i));
             if (var_instance_list.at(curr_id_i).get_size()>1){// if variables repeat in the query
-                for (int j=0;j<tuples_list.size();j++){ //looking through each row
+                for (int j=0;j<(int)tuples_list.size();j++){ //looking through each row
                     bool same_val = true;    //will it not match on all variables???
                     int curr_var_i = 0;
                     string previous_var = "";
@@ -154,7 +154,7 @@ void Relation::select(vector <string> tokens,vector<string> input) {
 
     vector <Tuple> temp_tuples = tuples_list;
     tuples_list.clear();
-    for (int k=0;k<temp_tuples.size();k++){
+    for (int k=0;k<(int)temp_tuples.size();k++){
         setTuple(temp_tuples.at(k));
     }
 }
@@ -162,35 +162,34 @@ void Relation::select(vector <string> tokens,vector<string> input) {
 void Relation::project(vector <string> tokens,vector<string> input) {
     check_for_duplicates(tokens,input);
     int attribute_index = 0;
-    for (int i=0;i<tokens.size();i++){
-        bool deleted = false;
+    for (int i=0;i<(int)tokens.size();i++){
+        bool was_deleted = false;
         if (tokens.at(i) != "ID") {
             attributes.erase(attributes.begin()+attribute_index);
-            for (int j=0;j<tuples_list.size();j++){
+            for (int j=0;j<(int)tuples_list.size();j++){
                 tuples_list.at(j).remove_value(attribute_index);
             }
-            deleted = true;
+            was_deleted = true;
         }else{
-            bool deleted = false;
             int curr_id_i = return_var_name_index(input.at(i)); //returns index of var in var_instance_list
             if (var_instance_list.at(curr_id_i).get_size()>1) {// if variables repeat in the query
                 if (i!= stoi(var_instance_list.at(curr_id_i).get_value(0))){// if the current index of i is not equal to
                     attributes.erase(attributes.begin()+attribute_index);//the index of where the first instance of that
-                    for (int j=0;j<tuples_list.size();j++){              //variable appeared, delete the column.
+                    for (int j=0;j<(int)tuples_list.size();j++){              //variable appeared, delete the column.
                         tuples_list.at(j).remove_value(attribute_index);
                     }
-                    deleted = true;
+                    was_deleted = true;
                 }
 
             }
         }
-        if (!deleted)//in the case a row was deleted, it does not count up through the columns.
+        if (!was_deleted)//in the case a row was deleted, it does not count up through the columns.
             attribute_index++;
     }
 
     vector <Tuple> temp_tuples = tuples_list;
     tuples_list.clear();
-    for (int k=0;k<temp_tuples.size();k++){
+    for (int k=0;k<(int)temp_tuples.size();k++){
         setTuple(temp_tuples.at(k));
     }
 }
@@ -198,7 +197,7 @@ void Relation::project(vector <string> tokens,vector<string> input) {
 void Relation::project_for_lab(vector <string> tokens,vector<string> input) {    // projects for lab, so that if
     int i=0;
     bool all_string= true;
-    while(i<tokens.size()&&all_string){
+    while(i<(int)tokens.size()&&all_string){
         if (tokens.at(i)=="ID")
             all_string = false;
         i++;
@@ -209,12 +208,12 @@ void Relation::project_for_lab(vector <string> tokens,vector<string> input) {   
 
 void Relation::check_for_duplicates(vector <string> tokens,vector<string> input) {
     var_instance_list.clear();
-    for (int i=0; i<input.size(); i++) {
+    for (int i=0; i<(int)input.size(); i++) {
         if (tokens.at(i) == "ID"){  // only with id's
             bool found_match = false;
             int j = 0;
             int curr_var =0;
-            while(curr_var<var_instance_list.size() && !found_match){
+            while(curr_var<(int)var_instance_list.size() && !found_match){
                 if (input.at(i)==var_instance_list.at(curr_var).get_var_name()){
                     found_match = true;
                     j=curr_var;
@@ -242,7 +241,7 @@ void Relation::check_for_duplicates(vector <string> tokens,vector<string> input)
 
 int Relation::return_var_name_index(string name) {
     int index =-1;
-    for (int k=0; k<var_instance_list.size(); k++) {
+    for (int k=0; k<(int)var_instance_list.size(); k++) {
         if (var_instance_list.at(k).get_var_name() == name)
             index = k;
     }

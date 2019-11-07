@@ -77,7 +77,7 @@ string Predicate::return_the_predicate(){
 
 string Predicate::toString_paramList() {
     string the_strList = "";
-    for (int i =0; i<the_parameter_list.size();i++){
+    for (int i =0; i<(int)the_parameter_list.size();i++){
         the_strList+= the_parameter_list.at(i)+" ";
     }
     return the_strList;
@@ -85,7 +85,7 @@ string Predicate::toString_paramList() {
 
 string Predicate::toString_paramType() {
     string typ_string = "";
-    for (int i =0; i<params_tkn_type.size();i++){
+    for (int i =0; i<(int)params_tkn_type.size();i++){
         typ_string+= params_tkn_type.at(i)+" ";
     }
     return typ_string;

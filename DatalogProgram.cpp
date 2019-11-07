@@ -287,7 +287,7 @@ string DatalogProgram::relation_toString(Relation & the_relation, string query_s
     rel_string+="\n";
     int i=0; // if list is all STRING types, don't print out the tuple!!!!!!!!!!---------------------
     bool all_string= true;
-    while(i<tokens.size()&&all_string){
+    while((i<(int)tokens.size())&&all_string){
         if (tokens.at(i)=="ID")
             all_string = false;
         i++;
@@ -299,7 +299,7 @@ string DatalogProgram::relation_toString(Relation & the_relation, string query_s
 
 int DatalogProgram::return_matching_relation_index(string nm) {// returns relation that names matches input
     int rel_index = -1;
-    for (int i=0; i<relation_list.size(); i++){
+    for (int i=0; i<(int)relation_list.size(); i++){
         if(nm == relation_list.at(i).getName())
             rel_index = i;
     }
