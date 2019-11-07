@@ -10,13 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d596b1fa-33ee-4bf7-a9f6-9ac2e4315cba" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/project_test.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rename_test.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/select_test.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Relation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Relation.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab3.exe" beforeDir="false" afterPath="$PROJECT_DIR$/lab3.exe" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -75,7 +69,7 @@
       <workItem from="1572916628619" duration="27707000" />
       <workItem from="1573012926680" duration="10192000" />
       <workItem from="1573062495492" duration="4307000" />
-      <workItem from="1573074227911" duration="33351000" />
+      <workItem from="1573074227911" duration="33476000" />
     </task>
     <servers />
   </component>
