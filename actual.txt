@@ -1,19 +1,16 @@
-marriedTo(Y,'Jan')? Yes(1)
-  Y='Ned'
-childOf(Y,'Jack')? Yes(2)
-  Y='Sue'
-  Y='Tim'
-siblingOf(Y,X)? No
-descendantOf(Y,X)? No
-ancestorOf(Y,X)? No
-relativeOf(Y,X)? No
-marriedTo('Dan',X)? Yes(1)
-  X='Kim'
-marriedTo('Ned',X)? Yes(1)
-  X='Jan'
-childOf('Anna',X)? Yes(2)
-  X='Dan'
-  X='Kim'
-childOf(Y,'Dan')? Yes(2)
-  Y='Anna'
-  Y='Ron'
+loves(A,X)? Yes(5)
+  A='bob', X='jane'
+  A='frankk', X='mary'
+  A='jane', X='frankk'
+  A='john', X='john'
+  A='mary', X='bob'
+loves(J,J)? Yes(1)
+  J='john'
+loves('frankk','mary')? Yes(1)
+loves('mary','frankk')? No
+hates(G,G)? Yes(1)
+  G='gollum'
+hates('jane',B)? Yes(1)
+  B='bob'
+hates(M,'frankk')? Yes(1)
+  M='mary'
