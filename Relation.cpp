@@ -76,6 +76,7 @@ int Relation::returnRowToInsert(Tuple tpl) {
     bool stop = false;
     while(curr_r<=getRows()-1){
         int curr_c = 0;
+        //BE SURE TO SET THE ATTRIBUTES BEFORE PLACING TUPLES
         while (curr_c<=getCols()-1){
             if ((tpl.get_value(curr_c).compare(tuples_list.at(curr_r).get_value(curr_c))) == 0) {
                 curr_c++;   //move ahead 1 col
@@ -108,6 +109,8 @@ void Relation::rename(vector <string> tokens,vector<string> input) {    //length
                     attribute_index++;
                 }
             }
+        }else if (tokens.size() == attributes.size()){
+            attribute_index++;
         }
     }
 }

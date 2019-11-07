@@ -10,25 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d596b1fa-33ee-4bf7-a9f6-9ac2e4315cba" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/100_bucket/answer5.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/100_bucket/answer6.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/100_bucket/answer9.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/100_bucket/test_case5.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/100_bucket/test_case6.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/100_bucket/test_case9.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/80_bucket/in43.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/80_bucket/out43.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/actual.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_test.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rename_test.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/select_test.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/80_bucket/zaaa.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatalogProgram.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/DatalogProgram.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatalogProgram.h" beforeDir="false" afterPath="$PROJECT_DIR$/DatalogProgram.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Relation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Relation.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Relation.h" beforeDir="false" afterPath="$PROJECT_DIR$/Relation.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tuple.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Tuple.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tuple.h" beforeDir="false" afterPath="$PROJECT_DIR$/Tuple.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab3.exe" beforeDir="false" afterPath="$PROJECT_DIR$/lab3.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +75,7 @@
       <workItem from="1572916628619" duration="27707000" />
       <workItem from="1573012926680" duration="10192000" />
       <workItem from="1573062495492" duration="4307000" />
-      <workItem from="1573074227911" duration="24353000" />
+      <workItem from="1573074227911" duration="33351000" />
     </task>
     <servers />
   </component>
