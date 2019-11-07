@@ -19,9 +19,10 @@ public:
     ~DatalogProgram();
 
     string datalogProgram_string();
+    string project_3_string();
     vector<Relation> relation_list;
     //void dataLogProgram(vector<string>&, vector<string>&, vector<int>&);
-    string relation_toString(Relation&); //this will go through many edits
+    string relation_toString(Relation&, string, vector<string>); //this will go through many edits
 
 private:
     string the_output = "";
@@ -31,6 +32,8 @@ private:
     string rule_flow="";
     string query_flow="";
     vector <string> domains;
+
+    string project_3_output = "";
 
     int tk_num = 0;
     int scheme_count=0;
@@ -47,6 +50,8 @@ private:
     void fact(int&, vector<string>&, vector<string>&, vector<int>&);
     void rule(int&, vector<string>&, vector<string>&, vector<int>&);//a
     void query(int&, vector<string>&, vector<string>&, vector<int>&);
+
+    void evaluate_query(vector<string>&, vector<string>&, int, string);//new
 
     void headPredicate(int&, vector<string>&, vector<string>&, vector<int>&, string&);//a
 

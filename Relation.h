@@ -29,12 +29,19 @@ public:
 
     void rename(vector<string>,vector<string>);
     void select(vector<string>,vector<string>);
-    void project(vector<string>);
+    void project(vector<string>,vector<string>);
+    void project_for_lab(vector<string>,vector<string>);
+
+    void check_for_duplicates(vector<string>,vector<string>);
+
+    int return_var_name_index(string);
 
 private:
     string name = "";
     vector <string> attributes;
     vector <Tuple> tuples_list;
+    vector <Tuple> var_instance_list; //will store list of tuples, in each 'tuple' it will state the index, or indexes of that var
+    //from query
     int returnRowToInsert(Tuple);//cur row, curr col, tuple in contention
 };
 

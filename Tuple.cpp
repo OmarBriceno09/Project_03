@@ -35,3 +35,11 @@ string Tuple::toStringTuple() {
         tuple_string+=" "+get_value(i);
     return  tuple_string;
 }
+
+void Tuple::set_var_name(string name) { //this is to check for duplicates with tuples
+    var_name = name;
+}
+
+string Tuple::get_var_name() {
+    return var_name;
+}

@@ -26,10 +26,10 @@ int main(int argc, char **argv) {
     cout<<"list_lize<total tokens> = "<<token_type.size();
     cout<<endl;*/
     DatalogProgram dlpg1(token_type,token_input,token_linenum);
-
-    for (int i=0; i<dlpg1.relation_list.size(); i++){
+    cout<<dlpg1.project_3_string();
+    /*for (int i=0; i<dlpg1.relation_list.size(); i++){
         cout<< dlpg1.relation_toString(dlpg1.relation_list.at(i));
-    }
+    }*/
 
     return 0;
 }

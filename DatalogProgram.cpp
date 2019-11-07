@@ -190,39 +190,34 @@ void DatalogProgram::query(int &tk_num, vector<string> &token_type, vector<strin
     if(token_type[tk_num]==qry_first) { //if its ID
         query_flow += "\n  ";
 
-        cout<<"in relation ["<<token_input[tk_num]<<"]: "<<endl;// delete later ------------------------------------------------
         int curr_rel_index = return_matching_relation_index(token_input[tk_num]);
 
         Predicate predicate(tk_num,token_type,token_input,token_linenum);
-        //cout<<"size: "<<predicate.the_parameter_list.size()<<endl; // delete later ------------------------------------------------
-        cout<<"         "<<predicate.toString_paramList()<<endl; // delete later ------------------------------------------------
-        cout<<"         "<<predicate.toString_paramType()<<endl; // delete later ------------------------------------------------
-        relation_list.at(curr_rel_index).rename(predicate.params_tkn_type, predicate.the_parameter_list);
-        Relation relation_copy1 = relation_list.at(curr_rel_index);
-        relation_copy1.select(predicate.params_tkn_type, predicate.the_parameter_list);
-        //to check if any predicate is id for project
-        int i=0;
-        bool all_string= true;
-        while(i<predicate.params_tkn_type.size()&&all_string){
-            if (predicate.params_tkn_type.at(i)=="ID")
-                all_string = false;
-            i++;
-        }
-
-        if (!all_string)
-            relation_copy1.project(predicate.params_tkn_type);
-        cout<<relation_toString(relation_copy1); // delete later -------------------------------------------------
-        cout<<endl;// delete later -------------------------------------------------
-
-
         query_flow += predicate.return_the_predicate();
         if(token_type[tk_num] == "Q_MARK") {
             query_flow += token_input[tk_num];
             tk_num++;
         }else{throw tk_num;}
+
+        //  ----------------- this is where query is being evaluated ---------------------------------------
+        evaluate_query(predicate.params_tkn_type, predicate.the_parameter_list,curr_rel_index,predicate.return_the_predicate());
+        //  ----------------- end query evaluation ---------------------------------------------------------------
     }else{throw tk_num;}
     query_count++;
 }
+
+//  ----------------- this is where query is being evaluated ---------------------------------------
+void DatalogProgram::evaluate_query(vector <string> &token_list, vector <string> &parameter_list, int curr_rel_index,
+                                    string query_string) {
+    //relation_list.at(curr_rel_index).rename(token_list, parameter_list);
+    Relation relation_copy1 = relation_list.at(curr_rel_index);
+    relation_copy1.select(token_list, parameter_list);
+    relation_copy1.project_for_lab(token_list,parameter_list);
+    //maybe change later
+    relation_copy1.rename(token_list, parameter_list);
+    project_3_output+=relation_toString(relation_copy1,query_string, token_list); // the OUTPUT
+}
+//  ----------------- end query evaluation ---------------------------------------------------------------
 
 //COMMA STRING stringList | lambda
 void DatalogProgram::stringList(int &tk_num, vector<string> &token_type, vector<string> &token_input,
@@ -278,14 +273,27 @@ string DatalogProgram::datalogProgram_string(){//prints the out string
     return the_output;
 }
 
-string DatalogProgram::relation_toString(Relation & the_relation) {
+string DatalogProgram::project_3_string() {
+    return project_3_output;
+}
+
+string DatalogProgram::relation_toString(Relation & the_relation, string query_string, vector<string> tokens) {
     string rel_string = "";
-    rel_string += the_relation.getName()+"\n ";
-    for(int j=0; j<the_relation.getCols();j++){
-        rel_string += the_relation.getAttribute(j)+", ";
+    rel_string += query_string+"? ";
+    if (!the_relation.getRows())
+        rel_string += "No";
+    else
+        rel_string += "Yes("+ to_string(the_relation.getRows())+")";
+    rel_string+="\n";
+    int i=0; // if list is all STRING types, don't print out the tuple!!!!!!!!!!---------------------
+    bool all_string= true;
+    while(i<tokens.size()&&all_string){
+        if (tokens.at(i)=="ID")
+            all_string = false;
+        i++;
     }
-    rel_string+='\n';
-    rel_string+=the_relation.toStringTuples();
+    if (!all_string)
+        rel_string+=the_relation.toStringTuples();
     return rel_string;
 }
 
